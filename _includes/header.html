@@ -1,0 +1,16 @@
+<header>
+  <div id="header_container" class="container">
+    <div>
+      <img src="{{ "/assets/images/kurzee_ascii.png" | prepend: site.baseurl | replace: '//', '/' }}" alt="ASCII avatar">
+    </div>
+    <div>
+      <a href="{{ " /" | prepend: site.baseurl | replace: '//' , '/' }}">
+        <h1>{{ site.title }}</h1>
+      </a>
+      <h2>{{ site.description }}</h2>
+      <div class="header-links">
+        {% include links.html %}
+      </div>
+    </div>
+  </div>
+</header>
