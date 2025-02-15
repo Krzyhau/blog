@@ -2,8 +2,9 @@
 title: FEZ spectrogram images - personal endeavor
 image: /assets/2025-02-05-fez-spectrograms-adventure/thumbnail.jpg
 ---
-I've generated a crisp-clean renders of images hidden within FEZ original soundtrack. All it took was a couple of scripts and... smuggling of audio tracks from France?
+I've generated a crisp-clean render of images hidden within FEZ original soundtrack. All it took was a couple of scripts and... smuggling of audio tracks from France?
 
+![](assets/2025-02-05-fez-spectrograms-adventure/banner.jpg)
 ## 1. Adventure
 
 [FEZ](https://store.steampowered.com/app/224760/FEZ/) is a game that has been close to my heart since I played it. I remember my younger self slowly figuring out all the meta puzzles and falling in love with the formula of metroid-brainia. To this day, I look back with joy to the day I ran back from school just to make it in time to collect an anti-cube from the clock tower. Shortly speaking, FEZ heavily influenced me both as a gamer and a game developer. So, not surprisingly, every once in a while, I'll try to join my passion for completely random technical bullshittery with some of the puzzles from this fantastic game (some of which are yet to be solved to this day!)
@@ -25,9 +26,9 @@ To start up, I focused on figuring out the best method of extraction. I wanted t
 
 I tried different methods - audio mixing, image processing etc. -  but there's only so much you can do without *additional data*... hmm, so what kind of *additional data* could help here?
 
-You see, there's this cool thing called **phase cancellation**. As a general simplification - sound waves work like math. 
-When you play two sound waves together, you get one that is a mix of two: `A + B = C`.
-Likewise, if you have that mixed audio and play it along with one of the original waves, but with an *inverted phase*, you get the other one in isolation: `C - B = A`.
+You see, there's this cool thing called **phase cancellation**. As a general simplification - sound waves work like math:
+- When you play two sound waves together, you get one that is a mix of two: `A + B = C`.
+- Likewise, if you have that mixed audio and play it along with one of the original waves, but with an *inverted phase*, you get the other one in isolation: `C - B = A`.
 
 This means that, if I had the same exact soundtrack but **unpuzzlified** (as in, without spectrogram images in it), I could invert its phase, then mix it with the **puzzlified** version (the one with spectrogram images) and get a pure audio file of just spectrogram images with absolutely zero additional noise! This meant it was time to begin the hunt for the unpuzzlified version of the OST!
 ## 3. Beyond
