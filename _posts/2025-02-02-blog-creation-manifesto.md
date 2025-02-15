@@ -26,14 +26,17 @@ For start, I'm hosting this blog on [GitHub Pages](https://pages.github.com/). F
 
 What's more important is that GitHub Pages is powered by [Jekyll](https://jekyllrb.com/) in a background, so I can take advantage of an ease of writing stuff in [Markdown](https://www.markdownguide.org/basic-syntax/). My posts written in this quite simple format can then be generated into a static HTML pages based on a previously prepared template. This is fantastic for two reasons. One is that I could easily migrate to any other solution, whether it's another instance of Jekyll lying on a VPS or a completely custom solution made from scratch (because I fully expect to go crazy with such idea at some point in the future). But more important benefit is that I can use [Obsidian](https://obsidian.md/) to easily write the posts in a WYSIWYG fashion. It's a tool that I've already used for making my own personal notes, so it's quite convenient for me to introduce it into another part of my life!
 Look! Here's me writing this very page in Obsidian right now!
-![](assets/images/blog-writing-recursive.jpg)
+
+![](assets/2025-02-02-blog-creation-manifesto/writing-recursive.jpg)
 
 Being a good static content generator, Jekyll gives you tools to fully customize the looks of your website. For now, I've decided to just ~~shamelessly steal~~ acquire a default [Hacker](https://github.com/pages-themes/hacker) theme and heavily customize it to my needs (in fact, I'd argue there's not a lot left from that theme). I ended up with something fairly simple and hopefully easy to consume, but I might tweak it in the future if I change my mind. I guess I'll leave a screenshot of how it's looking right now for historic preservation:
-![](assets/images/blog-first-screenshot.jpg)
+
+![](assets/2025-02-02-blog-creation-manifesto/first-screenshot.jpg)
 
 With all of that set up, the last thing that's missing is the interactivity part. You may think that, being a static website, it'll be difficult to set up any kind of comment section system. Apparently not!
 
 After a little bit of googling, I found [utterances](https://utteranc.es/), a small JavaScript widget adding a comment section based on GitHub Issues. Since I'm already hosting blog on a GitHub repository, it's the exact puzzle piece I needed! So now, not only you can completely ignore this entire post by scrolling all the way down, but also post a mean comment about how much you dislike my content (also with an ability to be formatted in Markdown!), and even use emoji reactions!
-![](assets/images/blog-creation-comment-screenshot.jpg)
+
+![](assets/2025-02-02-blog-creation-manifesto/comment-screenshot.jpg)
 
 I'm already quite happy with this setup and I'm eager to write some stuff to fill it in with **the juice™️**!  So, uh... I guess I'll see ya in the next post!
