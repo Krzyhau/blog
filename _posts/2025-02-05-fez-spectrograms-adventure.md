@@ -12,9 +12,8 @@ One of these puzzles are hidden within the game's soundtrack. Its composer, Disa
 
 Here's a small example of such thing that I made using an online converter. Below I've put both the original image and the image produced by previewing the encoded audio file in a spectrogram view in Audacity, as well as the audio itself. Just be warned, this audio does awful things to your ears, so lower down the volume before trying to play it back.
 
-| ![](assets/2025-02-05-fez-spectrograms-adventure/check-this-shit-original.png) | ![](assets/2025-02-05-fez-spectrograms-adventure/check-this-shit-spectrogram.png) |
-| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-![](assets/2025-02-05-fez-spectrograms-adventure/check-this-shit-audio.wav)
+![](assets/2025-02-05-fez-spectrograms-adventure/check-this-shit-comparison.png)
+<audio src="assets/2025-02-05-fez-spectrograms-adventure/check-this-shit-audio.wav" controls preload></audio>
 
 I've decided that recovering those images from the soundtrack is a fun idea for a side project! However, just opening a spectrogram viewer and screenshotting every track doesn't sound like something I'd enjoy doing (also, it was done multiple times before me already). What I'd like is to automate this process, so I can easily iterate on my tweaks and apply them to all tracks at once, then see how clean of images I can recover with a bunch of tweaks and slight post-processing. On top of that, well, once I have these images, I might do some kind of artsy thing with them! 👀
 
@@ -37,8 +36,8 @@ I'm actually not the first person to come up with this idea. A Reddit user named
 
 In my hunt, I used the track `03 - Beyond` as a reference - the hidden image in this track is right at the beginning and it has an amplitude big enough to be heard quite easily as a high-pitched noise. You can listen for the difference yourself (headphones are recommended):
 
-![](assets/2025-02-05-fez-spectrograms-adventure/beyond-puzzlified.wav)
-![](assets/2025-02-05-fez-spectrograms-adventure/beyond-unpuzzlified.wav)
+<audio src="assets/2025-02-05-fez-spectrograms-adventure/beyond-puzzlified.wav" controls preload></audio>
+<audio src="assets/2025-02-05-fez-spectrograms-adventure/beyond-unpuzzlified.wav" controls preload></audio>
 
 Here are all of the sources of the soundtrack that I managed to find:
 - [Disasterpeace Bandcamp album page](https://music.disasterpeace.com/album/fez-ost) - when bought, you get access to variety of audio formats (FLAC, WAV, MP3 and so on...). Unfortunately, all puzzlified.
