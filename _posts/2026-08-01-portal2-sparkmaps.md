@@ -78,13 +78,13 @@ float invalidSurfaceAngle = 0.0f;
 float validSurfaceAngle = 90.0f;
 for (int i = 0; i < 10; i++)
 {
-    float testAngle = (validSurfaceAngle + invalidSurfaceAngle) * 0.5f;
-    Vector testPoint = edgePoint
-        + cosf(testAngle) * originToCornerDirection * testDistance
-        + sinf(testAngle) * originToCornerOrthogonal * testDistance;
+    float testAngle = (validSurfaceAngle + invalidSurfaceAngle) * 0.5f;
+    Vector testPoint = edgePoint
+        + cosf(testAngle) * originToCornerDirection * testDistance
+        + sinf(testAngle) * originToCornerOrthogonal * testDistance;
 
-    if (IsPointOnPortalableSurface(testPoint)) validSurfaceAngle = testAngle;
-    else invalidSurfaceAngle = testAngle;
+    if (IsPointOnPortalableSurface(testPoint)) validSurfaceAngle = testAngle;
+    else invalidSurfaceAngle = testAngle;
 }
 ```
 
@@ -145,5 +145,4 @@ I hope that, after slightly prolonged explanation and a short exploration of por
 
 As a final homage to this niche piece of technology, I'll leave you with what's probably one of my favorite videos yet, where I bring the art of portal sparking to its extremes, and create a live recording of sparking surfaces, as seen by the game's algorithm:
 
-![](https://www.youtube.com/watch?v=BLdkiCwBoWg)
-
+<div class="youtube-video"><iframe src="http://www.youtube.com/embed/BLdkiCwBoWg" frameborder="0" allowfullscreen></iframe></div>
