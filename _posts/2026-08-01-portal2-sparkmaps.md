@@ -67,13 +67,13 @@ Now, whether it was a way to make life easier for map designers, or to support u
 
 Fortunately for game's performance, it's done in a smart way - instead of just blindly tracing lines to find the portal edge, a binary search is performed. This way, both position and orientation of a surface edge can be determined in just about 30 line traces! Unfortunately for the game's intent, this binary search is not deep enough to be precise enough, introducing a bit of an error.
 
- Even worse, there's a drastic issue with how edge orientation is determined. The idea is fine, and rather straightforward - a second point on the edge is determined by doing yet another binary search, similar to the first one, but in a circle around the first point, and then both points are used to determine orientation. 
+ Even worse, there's a drastic issue with how edge orientation is determined. The idea is fine, and rather straightforward - a second point on the edge is found by doing yet another binary search, similar to the first one, but in a circle around the first point, and then both points are used to calculate orientation. 
  
  The issue is in implementation. Here's a C++ pseudocode I've created - try to figure out what's wrong before reading further!
 
 ```cpp
-// we know "edgePoint + originToCornerOrthogonal * testDistance" is portalable,
-// but "edgePoint + originToCornerDirection * testDistance" is not.
+// we can safely assume "edgePoint + originToCornerOrthogonal * testDistance"
+// is portalable, but "edgePoint + originToCornerDirection * testDistance" is not.
 float invalidSurfaceAngle = 0.0f;
 float validSurfaceAngle = 90.0f;
 for (int i = 0; i < 10; i++)
@@ -90,11 +90,11 @@ for (int i = 0; i < 10; i++)
 
 The intention was to do this search starting from 90 degrees, which after 10 iterations of a loop, would result in either of angle variables being close to the value we're looking for, with an ~0.088 degrees margin of error. However, trigonometry functions take **radians** as parameters, not **degrees**. As a result, the initial angle for a binary search is 90 **radians**, which is roughly 5156.62 degrees. Because of that, the algorithm has a good chance to spit out nonsense, and even the best outcomes have a potential error margin of 5 degrees - big enough to cause some real issues. 
 
-What's fascinating is that you can see results of that error for yourselves in the game right now! When console variable `sv_portal_placement_debug` is set to 1, the game draws a bunch of debug overlays when shooting a portal, which include lines showing what the algorithm thinks the edge of a surface is. Well... not sure I agree with the way it thinks, because those lines very are often not even close to being angled properly:
+What's fascinating is that you can see results of that error for yourselves in the game right now! When console variable `sv_portal_placement_debug` is set to 1, the game draws a bunch of debug overlays when shooting a portal, which include lines showing what the algorithm thinks the edge of a surface is. Well... not sure I agree with the way it thinks, because those lines are often not even close to being angled properly:
 
 ![](assets/2026-08-01-portal2-sparkmaps/whatarethooose.jpg)
 
-Naturally, developers predicted some kind of imprecisions would occur *somewhere*. That's why, in most cases, whenever a portal is bumped from a checked portal corner, a "bump forgiveness" value of 2 units is added (for a scale, portal is 112x64 units). But some cases did not get a memo - more specifically, a case where portal is bumped away from a corner of a surface, and that's where you'll see the most of sparks. In fact, lack of any leeway in this case can make even the smallest errors lead to a portal sparking. And, if you recall, such error can also come from not only edge's orientation, but position as well.
+Naturally, developers predicted some kind of imprecisions would occur *somewhere*. That's why, in most cases, whenever a portal is bumped from a checked portal corner, a tiny value, internally called a "bump forgiveness", is added to bumping distance. But some cases did not get a memo - more specifically, a case where portal is bumped away from a corner of a surface, and that's where you'll see the most of sparks. In fact, lack of any leeway in this case can make even the smallest errors lead to a portal sparking. And, if you recall, such error can also come from not only edge's orientation, but position as well.
 
 I guess that's it for nerdy explanations. Well, this is the part where I patch the game.
 ## 3. The Part Where I Patch The Game.
@@ -103,7 +103,7 @@ Hello! This is the part where I patch the game! I'm using previously mentioned S
 - include bump forgiveness value when portal is bumped from a surface corner.
 - increase the precision of broken binary searches for edge position and orientation detection.
 
-Having those being applied dynamically by a plugin allows me to easily creates comparisons, and see how sparkmaps change when I enable or disable certain tweaks. I'm gonna go through several curious cases, taking a set of four screenshots each to see all permutations of tweaks.
+Having those being applied dynamically by a plugin allows me to easily creates comparisons, and see how sparkmaps change when I enable or disable certain tweaks. I'm gonna go through a couple of curious cases, taking a set of four sparkmaps each to see all permutations of tweaks.
 
 Let's start with a simple example - a flat surface with corner portal surface. It can be found in level called Laser Chaining.
 
@@ -111,9 +111,9 @@ Let's start with a simple example - a flat surface with corner portal surface. I
 
 As you can see, without tweaks, that entire corner is filled with a repeating pattern. It makes sense, as the precision loss is dependent on where the binary search starts, so one would expect it to repeat in some way. You can also see the repeating in both axes, as the phenomenon I described before happens for both top and side edge of a surface. The pattern is actually much more complex - it's just what it converged into at this specific zoom level.
 
-A bump tweak is eliminating this pattern almost entirely, leaving only a small region of 6 units still affected. It doesn't compare to a precision tweak, which removes the issue altogether with a sheer correctness of calculations. 
+A bump tweak is eliminating this pattern almost entirely, leaving only a small region of 6 units still affected. But it doesn't even compare to a precision tweak, which removes the issue altogether with a sheer correctness of calculations. 
 
-Curiously, with enough precision, a fundamental flaw of the edge orientation algorithm emerges. It can now incorrectly determine edge's orientation if a corner of a portal ends up being exactly a tiny distance away from a corner of a surface (I invite you to consult previously posted pseudocode and try to figure out why, but if you just want to know, [here's a very basic explanation that I've drawn in MS Paint](assets/2026-08-01-portal2-sparkmaps/puzzle_solution.jpg)). As a result, anything along a very thin diagonal line is detected as non-portallable. It just goes to show how complicated, and thus, fragile, this whole thing is!
+Curiously, with enough precision, a fundamental flaw of the edge orientation algorithm emerges. It can now incorrectly determine edge's orientation if a corner of a portal ends up being exactly a tiny distance away from a corner of a surface (I invite you to consult previously posted pseudocode and try to figure out why, but if you just want to know, [here's a very basic explanation that I've drawn in MS Paint](assets/2026-08-01-portal2-sparkmaps/puzzle_solution.jpg)). As a result, anything along a very thin diagonal line is detected as non-portallable due to the game thinking there isn't enough space. It just goes to show how complicated, and thus, fragile, this whole thing is!
 
 Let's check another sparkmap. This one in co-op level Bridge Testing has actually been named by the community - "Speech Bubble". Go figure.
 
